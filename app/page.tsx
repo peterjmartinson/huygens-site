@@ -56,12 +56,14 @@ export default function Home() {
             Find in-depth information about Next.js features and API.
           </p>
           <canvas id="canvas">
+          </canvas>
+          <script>
             const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
 
             ctx.fillStyle = "green";
             ctx.fillRect(10, 10, 150, 100);
-          </canvas>
+          </script>
         </a>
 
         <a
