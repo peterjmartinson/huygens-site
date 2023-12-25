@@ -56,7 +56,6 @@ export default function Home() {
             Find in-depth information about Next.js features and API.
           </p>
           <canvas id="canvas"></canvas>
-          <script src="jigger.js"></script>
         </a>
 
         <a
@@ -110,6 +109,7 @@ export default function Home() {
           </p>
         </a>
       </div>
+      <script src="jigger.js"></script>
     </main>
   )
 }
