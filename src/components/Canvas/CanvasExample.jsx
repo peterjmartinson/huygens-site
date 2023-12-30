@@ -1,9 +1,11 @@
-import { useRef, useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 // JSDoc: https://jsdoc.app/
 
-export const CanvasExample = () => {
+export function CanvasExample () {
+  /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
   const canvasRef = useRef(null)
+  /** @type {React.MutableRefObject<CanvasRenderingContext2D | null>} */
   const canvasCtxRef = useRef(null)
 
   useEffect(() => {
@@ -15,7 +17,7 @@ export const CanvasExample = () => {
       const ctx = canvasCtxRef.current
 
       // draw
-      ctx.fillStyle = "green"
+      ctx.fillStyle = 'green'
       ctx.fillRect(10, 10, 150, 100)
     }
   }, [])
@@ -24,8 +26,7 @@ export const CanvasExample = () => {
     <div>
       <h3>HELLO FROM CANVAS EXAMPLE</h3>
 
-      <canvas ref={canvasRef} id='asdasd'>
-      </canvas>
+      <canvas id='asdasd' ref={canvasRef} />
     </div>
   )
 }
