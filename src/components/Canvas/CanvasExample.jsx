@@ -1,8 +1,8 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 // JSDoc: https://jsdoc.app/
 
-export const CanvasExample = () => {
+export function CanvasExample () {
   const canvasRef = useRef(null)
   const canvasCtxRef = useRef(null)
 
@@ -15,7 +15,7 @@ export const CanvasExample = () => {
       const ctx = canvasCtxRef.current
 
       // draw
-      ctx.fillStyle = "green"
+      ctx.fillStyle = 'green'
       ctx.fillRect(10, 10, 150, 100)
     }
   }, [])
@@ -24,8 +24,7 @@ export const CanvasExample = () => {
     <div>
       <h3>HELLO FROM CANVAS EXAMPLE</h3>
 
-      <canvas ref={canvasRef} id='asdasd'>
-      </canvas>
+      <canvas id='asdasd' ref={canvasRef} />
     </div>
   )
 }

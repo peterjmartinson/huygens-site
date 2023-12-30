@@ -28,6 +28,8 @@
     "max-len": 0,
     "max-lines-per-function": 0,
     "new-cap": 0,
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
+    "no-eq-null": 0,
     "no-magic-numbers": 0,
     "space-before-function-paren": ["error", {
       "anonymous": "always",
