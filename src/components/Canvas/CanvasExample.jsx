@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 // JSDoc: https://jsdoc.app/
 
 export function CanvasExample () {
+  /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
   const canvasRef = useRef(null)
+  /** @type {React.MutableRefObject<CanvasRenderingContext2D | null>} */
   const canvasCtxRef = useRef(null)
 
   useEffect(() => {
