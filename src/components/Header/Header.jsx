@@ -1,6 +1,6 @@
 import Head from 'next/head'
 
-export const Header = ({ title }) => {
+export function Header ({ title }) {
   return (
     <Head>
       <title>{title}</title>

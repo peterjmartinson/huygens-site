@@ -41,6 +41,7 @@
     "object-curly-spacing": ["error", "always"],
     "one-var": ["error", "never"],
     "quote-props": 0,
+    "sort-imports": 0,
     "react/prop-types": 0,
     "react/jsx-indent": [2, 2],
     "react/jsx-indent-props": [2, 2],
