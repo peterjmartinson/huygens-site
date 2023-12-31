@@ -1,4 +1,4 @@
-import Header from '@/components/Header/Header'
+import Head from 'next/head'
 import Footer from '@/components/Footer/Footer'
 import CanvasExample from '@/components/Canvas/CanvasExample'
 import styles from '@/styles/Home.module.css'
@@ -6,7 +6,10 @@ import styles from '@/styles/Home.module.css'
 export default function Home () {
   return (
     <div className={styles.container}>
-      <Header title='Huygens' />
+      <Head>
+        <title>Huygens Pendulum Clock</title>
+        <link href="/favicon.ico" rel="icon" />
+      </Head>
 
       <main className={styles.main}>
         <CanvasExample />
