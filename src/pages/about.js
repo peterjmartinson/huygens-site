@@ -6,7 +6,7 @@ export default function Home () {
     <div className={styles.container}>
       <Head>
         <title>Huygens Pendulum Clock</title>
-        <link href="/favicon.ico" rel="icon" />
+        <link href='/favicon.ico' rel='icon' />
       </Head>
 
       <main className={styles.main}>
