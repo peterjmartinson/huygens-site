@@ -1,0 +1,39 @@
+.footer {
+  background: transparent;
+  color: var(--black);
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1rem 1.5rem 1rem;
+  margin: 0 4rem;
+  border-top: 1px solid var(--gray);
+}
+
+.footer .links {
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 16rem;
+}
+
+.footer .links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer .links li {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.footer .links a {
+  text-decoration: none;
+}
+
+.footer .links a:hover {
+  text-decoration: underline;
+}

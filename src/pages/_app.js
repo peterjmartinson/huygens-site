@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import '@/styles/globals.css'
 
 function MyApp ({ Component, pageProps }) {
@@ -7,6 +8,7 @@ function MyApp ({ Component, pageProps }) {
     <>
       <Header />
       <Component {...pageProps} />
+      <Footer />
     </>
   )
 }

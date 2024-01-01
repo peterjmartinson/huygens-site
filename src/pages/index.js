@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Footer from '@/components/Footer/Footer'
 import CanvasExample from '@/components/Canvas/CanvasExample'
 import styles from '@/styles/Home.module.css'
 
@@ -14,8 +13,6 @@ export default function Home () {
       <main className={styles.main}>
         <CanvasExample />
       </main>
-
-      <Footer />
     </div>
   )
 }
