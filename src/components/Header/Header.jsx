@@ -55,7 +55,7 @@ export function Header () {
       <nav className={styles.nav}>
         <ul className={styles.menu}>
           {navLinks.map(link => (
-            <li key={link.id} >
+            <li key={link.id}>
               <Link
                 aria-label={link.aria}
                 className={styles.navlink}
