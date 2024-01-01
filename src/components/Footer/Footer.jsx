@@ -1,26 +1,79 @@
-import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
+import Link from 'next/link'
+import styles from './Footer.module.css'
+
+export const navLinks = [
+  {
+    aria: 'About',
+    id: 'ABOUT',
+    href: '/about',
+    label: 'About'
+  },
+  {
+    aria: 'Contact',
+    id: 'CONTACT',
+    href: '/contact',
+    label: 'Contact'
+  },
+  {
+    aria: 'Home',
+    id: 'HOME',
+    href: '/',
+    label: 'Home'
+  }
+]
+
+export const socialLinks = [
+  {
+    aria: 'Twitter',
+    id: 'TWITTER',
+    href: 'https://twitter.com/',
+    label: 'X'
+  },
+  {
+    aria: 'Facebook',
+    id: 'FACEBOOK',
+    href: 'https://www.facebook.com/',
+    label: 'F'
+  }
+]
 
 export function Footer () {
   return (
     <footer className={styles.footer}>
-      <a
-        href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
-        rel='noopener noreferrer'
-        target='_blank'
-      >
-        Powered by{' '}
-        <span className={styles.logo}>
-          <Image
-            alt='Vercel Logo'
-            height={16}
-            src='/vercel.svg'
-            width={72}
-          />
-        </span>
-      </a>
+      <div className={styles.links}>
+        <ul className={styles.navLinks}>
+          {navLinks.map(link => (
+            <li key={link.id}>
+              <Link
+                aria-label={link.aria}
+                className={styles.navlink}
+                href={link.href}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <ul className={styles.socialLinks}>
+          {socialLinks.map(link => (
+            <li key={link.id}>
+              <Link
+                aria-label={link.aria}
+                href={link.href}
+                target='_blank'
+                rel='noreferrer'
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <p className={styles.copyright}>
+        Copyright 2024 Martinson & Schwane
+      </p>
     </footer>
   )
 }
-
-export default Footer
