@@ -1,0 +1,119 @@
+.header {
+  height: 82px;
+  background-color: var(--black);
+  box-shadow: 1px 1px 5px 0 var(--gray);
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  width: 100%;
+}
+
+.home {
+  display: inline-block;
+  color: var(--white);
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.nav {
+  top: 82px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: var(--black);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .5s ease-out;
+}
+
+.menu {
+  list-style: none;
+}
+
+.menu .navlink {
+  display: block;
+  padding: 1rem;
+  color: var(--white);
+}
+
+.menu .navlink:hover {
+  background-color: var(--gray);
+}
+
+.hamburger {
+  cursor: pointer;
+  padding: 40px 20px;
+}
+
+.hamburgerLine {
+  background: var(--white);
+  display: block;
+  height: 2px;
+  position: relative;
+  width: 24px;
+}
+
+.hamburgerLine::before,
+.hamburgerLine::after {
+  background: var(--white);
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all .2s ease-out;
+  width: 100%;
+}
+
+.hamburgerLine::before {
+  top: 5px;
+}
+
+.hamburgerLine::after {
+  top: -5px;
+}
+
+.sideMenu {
+  display: none;
+}
+
+.sideMenu:checked ~ .nav {
+  max-height: 100%;
+}
+
+.sideMenu:checked ~ .hamburger .hamburgerLine {
+  background: transparent;
+}
+
+.sideMenu:checked ~ .hamburger .hamburgerLine::before {
+  transform: rotate(-45deg);
+  top: 0;
+}
+
+.sideMenu:checked ~ .hamburger .hamburgerLine::after {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+@media (min-width: 768px) {
+  .nav {
+    max-height: none;
+    top: 0;
+    position: relative;
+    width: fit-content;
+    background-color: transparent;
+  }
+
+  .menu li {
+    display: inline-block;
+  }
+
+  .menu .navLink:hover {
+    background-color: transparent;
+    color: var(--gray);
+  }
+
+  .hamburger {
+    display: none;
+  }
+}
