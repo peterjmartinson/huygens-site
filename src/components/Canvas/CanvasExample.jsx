@@ -1,34 +1,20 @@
-import React, { useEffect, useRef } from 'react'
+// @ts-check
 
-// JSDoc: https://jsdoc.app/
+import { CanvasBuilder } from './CanvasBuilder'
 
-export function CanvasExample () {
-  /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
-  const canvasRef = useRef(null)
-  /** @type {React.MutableRefObject<CanvasRenderingContext2D | null>} */
-  const canvasCtxRef = useRef(null)
-
-  useEffect(() => {
-    // execute only after React links the DOM node to our `canvasRef`
-    if (canvasRef.current != null) {
-      // set our canvas Ctx ref equal to the '2d' canvas context
-      canvasCtxRef.current = canvasRef.current.getContext('2d')
-      // init local `ctx` variable
-      const ctx = canvasCtxRef.current
-
-      // draw
+/**
+ * @type {import('./CanvasBuilder').DrawFactory}
+ */
+function drawExample (canvas) {
+  return {
+    draw () {
+      const ctx = canvas.getContext('2d')
       ctx.fillStyle = 'green'
-      ctx.fillRect(10, 10, 150, 100)
+      ctx.fillRect(0, 0, 100, 100)
     }
-  }, [])
-
-  return (
-    <div>
-      <h3>HELLO FROM CANVAS EXAMPLE</h3>
-
-      <canvas id='asdasd' ref={canvasRef} />
-    </div>
-  )
+  }
 }
 
-export default CanvasExample
+export const CanvasExample = new CanvasBuilder()
+  .withDrawFactory(drawExample)
+  .build()
