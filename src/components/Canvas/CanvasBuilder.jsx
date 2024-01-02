@@ -4,44 +4,44 @@ import React, { useEffect, useRef } from 'react'
 import styles from './Canvas.module.css'
 
 /**
- * @typedef {(canvas: HTMLCanvasElement) => { render: () => void, abort?: () => void }} RenderFactory
+ * @typedef {(canvas: HTMLCanvasElement) => { draw: () => void, abort?: () => void }} DrawFactory
  */
 
 export class CanvasBuilder {
-  #renderFactory = null
+  #drawFactory = null
 
   /**
    * A function that returns an object of functions:
-   *  - render() -- does the actual drawing on a provided canvas.
-   *  - abort() -- [optional] cancels any animation.
-   * @param {RenderFactory} renderFactory
+   *  - draw() - does the actual drawing on a provided canvas.
+   *  - abort() - [optional] cancels any animation.
+   * @param {DrawFactory} drawFactory
    * @returns {CanvasBuilder}
    */
-  withRenderFactory (renderFactory) {
-    this.#renderFactory = renderFactory
+  withDrawFactory (drawFactory) {
+    this.#drawFactory = drawFactory
     return this
   }
 
   /**
-   * @returns {RenderFactory}
+   * @returns {DrawFactory}
    */
-  get renderFactory () {
-    return this.#renderFactory
+  get drawFactory () {
+    return this.#drawFactory
   }
 
   /**
    * Ensures the builder has required parameters
    */
   validateParamsToBuild () {
-    if (this.#renderFactory == null) {
-      throw new Error('A render function is required')
+    if (this.#drawFactory == null) {
+      throw new Error('A drawFactory function is required to build')
     }
   }
 
   build () {
     this.validateParamsToBuild()
 
-    const renderFactory = this.renderFactory
+    const drawFactory = this.drawFactory
 
     return function Canvas (props) {
       /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
@@ -67,10 +67,10 @@ export class CanvasBuilder {
           canvas.style.width = `${width}px`
           canvas.style.height = `${height}px`
 
-          const { render, abort } = renderFactory(canvas)
+          const { draw, abort } = drawFactory(canvas)
 
           abortFn = abort
-          render()
+          draw()
         }
 
         return () => {

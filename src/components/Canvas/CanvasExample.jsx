@@ -3,11 +3,11 @@
 import { CanvasBuilder } from './CanvasBuilder'
 
 /**
- * @type {import('./CanvasBuilder').RenderFactory}
+ * @type {import('./CanvasBuilder').DrawFactory}
  */
-function renderExample (canvas) {
+function drawExample (canvas) {
   return {
-    render () {
+    draw () {
       const ctx = canvas.getContext('2d')
       ctx.fillStyle = 'green'
       ctx.fillRect(0, 0, 100, 100)
@@ -16,5 +16,5 @@ function renderExample (canvas) {
 }
 
 export const CanvasExample = new CanvasBuilder()
-  .withRenderFactory(renderExample)
+  .withDrawFactory(drawExample)
   .build()

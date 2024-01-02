@@ -3,13 +3,13 @@
 import { CanvasBuilder } from './CanvasBuilder'
 
 /**
- * @type {import('./CanvasBuilder').RenderFactory}
+ * @type {import('./CanvasBuilder').DrawFactory}
  */
-function animatedCircleFactory (canvas) {
+function drawAnimatedCircle (canvas) {
   let requestId
   let i = 0
 
-  function render () {
+  function draw () {
     const ctx = canvas.getContext('2d')
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -23,7 +23,7 @@ function animatedCircleFactory (canvas) {
     )
     ctx.fill()
     i += 0.05
-    requestId = requestAnimationFrame(render)
+    requestId = requestAnimationFrame(draw)
   }
 
   function abort () {
@@ -31,11 +31,11 @@ function animatedCircleFactory (canvas) {
   }
 
   return {
-    render,
+    draw,
     abort
   }
 }
 
 export const Circle = new CanvasBuilder()
-  .withRenderFactory(animatedCircleFactory)
+  .withDrawFactory(drawAnimatedCircle)
   .build()
