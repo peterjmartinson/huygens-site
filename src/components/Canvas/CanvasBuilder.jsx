@@ -4,7 +4,10 @@ import React, { useEffect, useRef } from 'react'
 import styles from './Canvas.module.css'
 
 /**
- * @typedef {(canvas: HTMLCanvasElement) => { draw: () => void, abort?: () => void }} DrawFactory
+ * @typedef  {Object} DrawFunctionConfig
+ * @property {number} scale Calculated from device's pixel ratio
+ *
+ * @typedef  {(canvas: HTMLCanvasElement, config?: DrawFunctionConfig) => { draw: () => void, abort?: () => void }} DrawFactory
  */
 
 export class CanvasBuilder {
@@ -53,21 +56,17 @@ export class CanvasBuilder {
         if (canvasRef.current != null) {
           const canvas = canvasRef.current
 
-          const width = Number(getComputedStyle(canvas)
-            .getPropertyValue('width')
-            .slice(0, -2))
-          const height = Number(getComputedStyle(canvas)
-            .getPropertyValue('height')
-            .slice(0, -2))
+          const width = Number.parseInt(getComputedStyle(canvas)
+            .getPropertyValue('width'))
+          const height = Number.parseInt(getComputedStyle(canvas)
+            .getPropertyValue('height'))
 
           // https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio
-          const ratio = window.devicePixelRatio ?? 1
-          canvas.width = width * ratio
-          canvas.height = height * ratio
-          canvas.style.width = `${width}px`
-          canvas.style.height = `${height}px`
+          const scale = window.devicePixelRatio ?? 1
+          canvas.width = width * scale
+          canvas.height = height * scale
 
-          const { draw, abort } = drawFactory(canvas)
+          const { draw, abort } = drawFactory(canvas, { scale })
 
           abortFn = abort
           draw()
