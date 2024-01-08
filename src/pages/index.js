@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { CanvasExample } from '@/components/Canvas/CanvasExample'
+import { FallingBall } from '@/components/Canvas/FallingBall'
 import { Circle } from '@/components/Canvas/Circle'
 import styles from '@/styles/Home.module.css'
 
@@ -12,8 +12,7 @@ export default function Home () {
       </Head>
 
       <main className={styles.main}>
-        <Circle />
-        <CanvasExample />
+        <FallingBall />
       </main>
     </div>
   )
