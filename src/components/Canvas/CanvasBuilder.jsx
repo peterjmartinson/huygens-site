@@ -4,10 +4,14 @@ import React, { useEffect, useRef } from 'react'
 import styles from './Canvas.module.css'
 
 /**
- * @typedef  {Object} DrawFunctionConfig
- * @property {number} scale Calculated from device's pixel ratio
+ * @typedef  {Object} DrawFactoryConfig
+ * @property {number} [scale] Calculated from device's pixel ratio
+ * @property {number} [interval] Some iteration index
+ * @property {(i: number) => void} [updateInterval] Function to update the iteration index
  *
- * @typedef  {(canvas: HTMLCanvasElement, config?: DrawFunctionConfig) => { draw: () => void, abort?: () => void }} DrawFactory
+ * @typedef  {(props?: Record<string, any>) => void} DrawFunction
+ *
+ * @typedef  {(canvas: HTMLCanvasElement, config?: DrawFactoryConfig) => { draw: DrawFunction, abort?: () => void }} DrawFactory
  */
 
 export class CanvasBuilder {
@@ -49,12 +53,18 @@ export class CanvasBuilder {
     return function Canvas (props) {
       /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
       const canvasRef = useRef(null)
+      const intervalRef = useRef(0)
+
+      function updateInterval (i) {
+        intervalRef.current = i
+      }
 
       useEffect(() => {
         let abortFn
 
         if (canvasRef.current != null) {
           const canvas = canvasRef.current
+          const interval = intervalRef.current
 
           const width = Number.parseInt(getComputedStyle(canvas)
             .getPropertyValue('width'))
@@ -66,16 +76,17 @@ export class CanvasBuilder {
           canvas.width = width * scale
           canvas.height = height * scale
 
-          const { draw, abort } = drawFactory(canvas, { scale })
+          const { draw, abort } = drawFactory(canvas, { scale, interval, updateInterval })
 
           abortFn = abort
-          draw()
+          draw(props)
         }
 
         return () => {
+          console.log('unmounting')
           abortFn?.()
         }
-      }, [])
+      }, [props])
 
       return (
         <div>
