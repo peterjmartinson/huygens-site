@@ -31,3 +31,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# vim because you know you love it
+.*.sw*
