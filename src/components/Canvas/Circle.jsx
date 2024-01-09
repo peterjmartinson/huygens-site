@@ -2,14 +2,13 @@
 
 import { CanvasBuilder } from './CanvasBuilder'
 
-/**
- * @type {import('./CanvasBuilder').DrawFactory}
- */
-function drawAnimatedCircle (canvas) {
+/** @type {import('./CanvasBuilder').DrawFactory} */
+function drawAnimatedCircle (canvas, { interval = 0, updateInterval }) {
   let requestId
-  let i = 0
+  let i = interval
 
-  function draw () {
+  /** @type {import('./CanvasBuilder').DrawFunction} */
+  function draw ({ isPaused }) {
     const ctx = canvas.getContext('2d')
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -22,8 +21,13 @@ function drawAnimatedCircle (canvas) {
       2 * Math.PI
     )
     ctx.fill()
-    i += 0.05
-    requestId = requestAnimationFrame(draw)
+
+    if (!isPaused) {
+      i += 0.05
+      updateInterval(i)
+    }
+
+    requestId = requestAnimationFrame(() => draw({ isPaused }))
   }
 
   function abort () {
