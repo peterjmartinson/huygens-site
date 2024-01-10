@@ -2,10 +2,15 @@
 
 import { CanvasBuilder } from './CanvasBuilder'
 
+const initialState = {
+  i: 0,
+  delta: 0.05
+}
+
 /** @type {import('./CanvasBuilder').DrawFactory} */
-function drawAnimatedCircle (canvas, { interval = 0, updateInterval }) {
+function drawAnimatedCircle (canvas, { drawState, setDrawState }) {
   let requestId
-  let i = interval
+  let { i, delta } = drawState
 
   /** @type {import('./CanvasBuilder').DrawFunction} */
   function draw ({ isPaused }) {
@@ -22,9 +27,10 @@ function drawAnimatedCircle (canvas, { interval = 0, updateInterval }) {
     )
     ctx.fill()
 
+    // if we're NOT paused, update i locally and in parent component
     if (!isPaused) {
-      i += 0.05
-      updateInterval(i)
+      i += delta
+      setDrawState({ i })
     }
 
     requestId = requestAnimationFrame(() => draw({ isPaused }))
@@ -42,4 +48,5 @@ function drawAnimatedCircle (canvas, { interval = 0, updateInterval }) {
 
 export const Circle = new CanvasBuilder()
   .withDrawFactory(drawAnimatedCircle)
+  .withInitialDrawState(initialState)
   .build()

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Head from 'next/head'
 import { Circle } from '@/components/Canvas/Circle'
+import { CanvasExample } from '@/components/Canvas/CanvasExample'
 import styles from '@/styles/Home.module.css'
 
 export default function Home () {
@@ -23,6 +24,7 @@ export default function Home () {
         </button>
 
         <Circle isPaused={isPaused} />
+        <CanvasExample />
       </main>
     </div>
   )
