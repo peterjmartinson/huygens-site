@@ -1,5 +1,6 @@
+import React from 'react'
 import Head from 'next/head'
-import { FallingBall } from '@/components/Canvas/FallingBall'
+import { FallingBall } from '@/drawings/falling-ball'
 import styles from '@/styles/Home.module.css'
 
 export default function Home () {

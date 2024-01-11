@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Head from 'next/head'
-import { Circle } from '@/components/Canvas/Circle'
-import { CanvasExample } from '@/components/Canvas/CanvasExample'
+import { Circle } from '@/drawings/circle'
+import { Example } from '@/drawings/example'
 import styles from '@/styles/Home.module.css'
 
 export default function Home () {
@@ -24,7 +24,7 @@ export default function Home () {
         </button>
 
         <Circle isPaused={isPaused} />
-        <CanvasExample />
+        <Example />
       </main>
     </div>
   )

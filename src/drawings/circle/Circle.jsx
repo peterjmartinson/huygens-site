@@ -1,18 +1,19 @@
 // @ts-check
 
-import { CanvasBuilder } from './CanvasBuilder'
+import { CanvasBuilder } from '@/components/Canvas'
+import { Color } from '@/constants'
 
 const initialState = {
   i: 0,
   delta: 0.05
 }
 
-/** @type {import('./CanvasBuilder').DrawFactory} */
+/** @type {import('@/components/Canvas/CanvasBuilder').DrawFactory} */
 function drawAnimatedCircle (canvas, { drawState, setDrawState }) {
   let requestId
   let { i, delta } = drawState
 
-  /** @type {import('./CanvasBuilder').DrawFunction} */
+  /** @type {import('@/components/Canvas/CanvasBuilder').DrawFunction} */
   function draw ({ isPaused }) {
     const ctx = canvas.getContext('2d')
 
@@ -25,6 +26,7 @@ function drawAnimatedCircle (canvas, { drawState, setDrawState }) {
       0,
       2 * Math.PI
     )
+    ctx.fillStyle = Color.BLUE
     ctx.fill()
 
     // if we're NOT paused, update i locally and in parent component
