@@ -35,12 +35,13 @@ function drawFallingBall (canvas) {
     }
   }
 
+  /** @type {import('./CanvasBuilder').DrawFunction} */
   function draw () {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     ball.update()
     ball.create()
-    requestId = requestAnimationFrame(draw)
+    requestId = requestAnimationFrame(() => draw())
   }
 
   function abort () {

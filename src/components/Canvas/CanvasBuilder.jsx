@@ -1,17 +1,25 @@
 // @ts-check
 
 import React, { useEffect, useRef } from 'react'
+import { isFunction, isObject } from '@/utils/is'
 import styles from './Canvas.module.css'
 
 /**
- * @typedef  {Object} DrawFunctionConfig
- * @property {number} scale Calculated from device's pixel ratio
+ * @typedef  {Record<string, any>} DrawState
  *
- * @typedef  {(canvas: HTMLCanvasElement, config?: DrawFunctionConfig) => { draw: () => void, abort?: () => void }} DrawFactory
+ * @typedef  {Object} DrawFactoryConfig
+ * @property {number}              [scale] Calculated from device's pixel ratio
+ * @property {DrawState}           [drawState] An object representing canvas draw state
+ * @property {(DrawState) => void} [setDrawState] Function to update the canvas draw state
+ *
+ * @typedef  {(props?: Record<string, any>) => void} DrawFunction
+ *
+ * @typedef  {(canvas: HTMLCanvasElement, config?: DrawFactoryConfig) => { draw: DrawFunction, abort?: () => void }} DrawFactory
  */
 
 export class CanvasBuilder {
   #drawFactory = null
+  #initialDrawState = {}
 
   /**
    * A function that returns an object of functions:
@@ -21,6 +29,7 @@ export class CanvasBuilder {
    * @returns {CanvasBuilder}
    */
   withDrawFactory (drawFactory) {
+    if (!isFunction(drawFactory)) throw new TypeError('drawFactory must be a function')
     this.#drawFactory = drawFactory
     return this
   }
@@ -30,6 +39,24 @@ export class CanvasBuilder {
    */
   get drawFactory () {
     return this.#drawFactory
+  }
+
+  /**
+   * Provides an initial state to the canvas draw function
+   * @param {DrawState} initialState An initial canvas drawing state
+   * @returns CanvasBuilder
+   */
+  withInitialDrawState (initialState) {
+    if (!isObject(initialState)) throw new TypeError('initialState must be a plain object')
+    this.#initialDrawState = initialState
+    return this
+  }
+
+  /**
+   * @returns {DrawState} An initial canvas drawing state
+   */
+  get initialDrawState () {
+    return this.#initialDrawState
   }
 
   /**
@@ -45,16 +72,31 @@ export class CanvasBuilder {
     this.validateParamsToBuild()
 
     const drawFactory = this.drawFactory
+    const initialDrawState = this.initialDrawState
 
     return function Canvas (props) {
       /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
       const canvasRef = useRef(null)
+      const drawStateRef = useRef(initialDrawState)
+
+      /**
+       * Updates draw state.
+       * @param {Record<string, any>} newState An object with any/all updated properties to set
+       */
+      function setDrawState (newState) {
+        if (!isObject(newState)) return
+
+        for (const key in newState) {
+          drawStateRef.current[key] = newState[key]
+        }
+      }
 
       useEffect(() => {
         let abortFn
 
         if (canvasRef.current != null) {
           const canvas = canvasRef.current
+          const drawState = drawStateRef.current
 
           const width = Number.parseInt(getComputedStyle(canvas)
             .getPropertyValue('width'))
@@ -66,16 +108,16 @@ export class CanvasBuilder {
           canvas.width = width * scale
           canvas.height = height * scale
 
-          const { draw, abort } = drawFactory(canvas, { scale })
+          const { draw, abort } = drawFactory(canvas, { scale, drawState, setDrawState })
 
           abortFn = abort
-          draw()
+          draw(props)
         }
 
         return () => {
           abortFn?.()
         }
-      }, [])
+      }, [props])
 
       return (
         <div>

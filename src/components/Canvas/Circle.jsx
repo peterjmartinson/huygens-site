@@ -2,14 +2,18 @@
 
 import { CanvasBuilder } from './CanvasBuilder'
 
-/**
- * @type {import('./CanvasBuilder').DrawFactory}
- */
-function drawAnimatedCircle (canvas) {
-  let requestId
-  let i = 0
+const initialState = {
+  i: 0,
+  delta: 0.05
+}
 
-  function draw () {
+/** @type {import('./CanvasBuilder').DrawFactory} */
+function drawAnimatedCircle (canvas, { drawState, setDrawState }) {
+  let requestId
+  let { i, delta } = drawState
+
+  /** @type {import('./CanvasBuilder').DrawFunction} */
+  function draw ({ isPaused }) {
     const ctx = canvas.getContext('2d')
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -22,8 +26,14 @@ function drawAnimatedCircle (canvas) {
       2 * Math.PI
     )
     ctx.fill()
-    i += 0.05
-    requestId = requestAnimationFrame(draw)
+
+    // if we're NOT paused, update i locally and in parent component
+    if (!isPaused) {
+      i += delta
+      setDrawState({ i })
+    }
+
+    requestId = requestAnimationFrame(() => draw({ isPaused }))
   }
 
   function abort () {
@@ -38,4 +48,5 @@ function drawAnimatedCircle (canvas) {
 
 export const Circle = new CanvasBuilder()
   .withDrawFactory(drawAnimatedCircle)
+  .withInitialDrawState(initialState)
   .build()
