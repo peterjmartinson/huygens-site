@@ -2,6 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "jsx": "react",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "paths": {
       "@/*":  ["src/*"]
     },
