@@ -1,11 +1,9 @@
 // @ts-check
 
-import { CanvasBuilder } from './CanvasBuilder'
-import { GRAVITY, BLUE } from './Standards'
+import { CanvasBuilder } from '@/components/Canvas'
+import { Physics, Color } from '@/constants'
 
-/**
- * @type {import('./CanvasBuilder').DrawFactory}
- */
+/** @type {import('@/components/Canvas/CanvasBuilder').DrawFactory} */
 function drawFallingBall (canvas) {
   const ctx = canvas.getContext('2d')
   let requestId
@@ -13,12 +11,12 @@ function drawFallingBall (canvas) {
   const ground = ctx.canvas.height
   const ball = {
     radius: 10,
-    color: BLUE,
+    color: Color.BLUE,
     position: { x: ctx.canvas.width / 2, y: 10 },
     velocity: { x: 0, y: 0 },
     update () {
-      this.velocity.x += GRAVITY.x
-      this.velocity.y += GRAVITY.y
+      this.velocity.x += Physics.GRAVITY.x
+      this.velocity.y += Physics.GRAVITY.y
       this.position.x += this.velocity.x
       this.position.y += this.velocity.y
       const g = ground - this.radius
@@ -35,7 +33,7 @@ function drawFallingBall (canvas) {
     }
   }
 
-  /** @type {import('./CanvasBuilder').DrawFunction} */
+  /** @type {import('@/components/Canvas/CanvasBuilder').DrawFunction} */
   function draw () {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
