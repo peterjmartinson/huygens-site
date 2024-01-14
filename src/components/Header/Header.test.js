@@ -22,7 +22,7 @@ describe('Header component', () => {
 
   it('should render correct number of navigation links', () => {
     const { Links } = renderHeader()
-    expect(Links()).toHaveLength(4)
+    expect(Links()).toHaveLength(5)
   })
 
   it('should render home link correctly', () => {
