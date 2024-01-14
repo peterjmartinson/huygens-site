@@ -43,7 +43,7 @@ export default function Home () {
             in time F.  If there is both an initial speed (BD) and gravity,
             <action id="AnimateBodyCtoEUnderGravityAndWithConstantVelocity">the body will travel</action>
             a distance that's equal to
-            <action "HighlightLineCB">CB</action>
+            <action id="HighlightLineCB">CB</action>
             +
             <action id="HighlightLineBD">BD</action>
             =
