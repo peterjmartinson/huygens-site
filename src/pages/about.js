@@ -4,7 +4,7 @@ import { PageContainer, MainContainer, ContentContainer } from '@/components/Lay
 import { Circle } from '@/drawings/circle'
 import { Example } from '@/drawings/example'
 
-export default function Aboute () {
+export default function About () {
   const [isPaused, setIsPaused] = useState(true)
 
   const togglePause = () => setIsPaused(paused => !paused)
