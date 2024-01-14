@@ -53,7 +53,7 @@ export default function Home () {
         </section>
 
         <figure>
-          <img src='Assets/Section_II_Hypothesis_III.png' alt='Diagram: path of an object is a combination of its instantaneous beginning velocity, and its acceleration.' />
+          <img src='./Assets/Section_II_Hypothesis_III.png' alt='Diagram: path of an object is a combination of its instantaneous beginning velocity, and its acceleration.' />
           <button onClick={togglePause}>
             {isPaused ? 'Unpause' : 'Pause'}
           </button>
