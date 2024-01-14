@@ -11,9 +11,9 @@ const PageContainer = ({ className, children }) => (
 )
 
 const MainContainer = ({ className, children }) => (
-  <div className={cn(styles.main_container, className)}>
+  <main className={cn(styles.main_container, className)}>
     {children}
-  </div>
+  </main>
 )
 
 const ContentContainer = ({ className, children }) => (
