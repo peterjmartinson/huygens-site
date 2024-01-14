@@ -1,0 +1,44 @@
+/* Note: variables are defined in globals.css */
+
+.page_container {
+  flex: 1;
+}
+
+.main_container {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  /* limit main content width and center horizontally*/
+  max-width: 1080px;
+  margin-top: var(--header-height-sm);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content_container {
+  flex: auto;
+  padding: 0.25rem;
+}
+
+.content_container:first-child {
+  flex: 1 0 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 800px) {
+  .main_container {
+    margin-top: var(--header-height-lg);;
+  }
+
+  .content_container {
+    padding: 0.5rem;
+  }
+
+  .content_container:first-child {
+    flex-basis: 200px;
+  }
+}
