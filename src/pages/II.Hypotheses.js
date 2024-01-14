@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
+import Image from 'next/image'
 import { Circle } from '@/drawings/circle'
 import styles from '@/styles/Home.module.css'
 
@@ -53,7 +54,12 @@ export default function Home () {
         </section>
 
         <figure>
-          <img src='./Assets/Section_II_Hypothesis_III.png' alt='Diagram: path of an object is a combination of its instantaneous beginning velocity, and its acceleration.' />
+          <Image
+            src='/Assets/Section_II_Hypothesis_III.PNG'
+            width={208}
+            height={375}
+            alt='Diagram: path of an object is a combination of its instantaneous beginning velocity, and its acceleration.'
+          />
           <button onClick={togglePause}>
             {isPaused ? 'Unpause' : 'Pause'}
           </button>
