@@ -16,6 +16,12 @@ export const navLinks = [
     label: 'Proposition II'
   },
   {
+    aria: 'Section 2 Hypotheses',
+    href: '/II.Hypotheses',
+    id: '2Hypotheses',
+    label: 'Section 2 Hypotheses'
+  },
+  {
     aria: 'About',
     href: '/about',
     id: 'ABOUT',
