@@ -120,12 +120,10 @@ export class CanvasBuilder {
       }, [props])
 
       return (
-        <div>
-          <canvas
-            ref={canvasRef}
-            className={styles.canvas}
-          />
-        </div>
+        <canvas
+          ref={canvasRef}
+          className={styles.canvas}
+        />
       )
     }
   }

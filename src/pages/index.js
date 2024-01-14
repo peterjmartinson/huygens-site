@@ -1,19 +1,21 @@
 import React from 'react'
 import Head from 'next/head'
+import { PageContainer, MainContainer, ContentContainer } from '@/components/Layout'
 import { FallingBall } from '@/drawings/falling-ball'
-import styles from '@/styles/Home.module.css'
 
 export default function Home () {
   return (
-    <div className={styles.container}>
+    <PageContainer>
       <Head>
         <title>Huygens Pendulum Clock</title>
         <link href='/favicon.ico' rel='icon' />
       </Head>
 
-      <main className={styles.main}>
-        <FallingBall />
-      </main>
-    </div>
+      <MainContainer>
+        <ContentContainer>
+          <FallingBall />
+        </ContentContainer>
+      </MainContainer>
+    </PageContainer>
   )
 }

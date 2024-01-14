@@ -1,7 +1,4 @@
-.header {
-  --header-height-sm: 3rem;
-  --header-height-lg: 5rem;
-}
+/* Note: variables are defined in globals.css */
 
 .header {
   height: var(--header-height-sm);
