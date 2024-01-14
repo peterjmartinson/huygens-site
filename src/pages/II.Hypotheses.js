@@ -52,7 +52,7 @@ export default function Home () {
         </section>
 
         <figure>
-          <img src="Assets/Section_II_Hypothesis_III.png">
+          <img src="Assets/Section_II_Hypothesis_III.png" />
           <button onClick={togglePause}>
             {isPaused ? 'Unpause' : 'Pause'}
           </button>
