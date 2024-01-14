@@ -1,8 +1,12 @@
-/** global color variables */
 :root {
+  /* global color variables */
   --white: #f9f9f9;
   --black: #36383F;
   --gray: #85888C;
+
+  /* global static header positioning variables */
+  --header-height-sm: 3rem;
+  --header-height-lg: 5rem;
 }
 
 html,
@@ -15,6 +19,13 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+/* This is the ID of the overall containing div */
+#__next {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -22,4 +33,5 @@ a {
 
 * {
   box-sizing: border-box;
+  min-width: 0;
 }
