@@ -33,14 +33,22 @@ export default function Home () {
           <p> The image shows several paths of our body starting its motion at point
           <action id="HighlightPointC">C</action>.  First consider the motion straight down, from
           <action id="HighlightLineCE">C to E</action>.  </p>
-          <p> If the body is
-          <action id="AnimateBodyCtoBUnderGravity">released from C at rest</action>, and is acted on by gravity, it will reach point B in an amount of time Huygens calls
-          <action id="HighlightF">F</action>  If there is no gravity, and it given some initial speed downward,
-          <action id="AnimateBodyCtoDWithConstantVelocity">it will reach point D</action> in time F.  If there is both an initial speed (BD) and gravity,
-          <action id="AnimateBodyCtoEUnderGravityAndWithConstantVelocity">the body will travel</action> a distance that's equal to
-          <action "HighlightLineCB">CB</action> +
-          <action id="HighlightLineBD">BD</action> =
-          <action id="HightlightLineCE">CE</action>.</p>
+          <p>
+            If the body is
+            <action id="AnimateBodyCtoBUnderGravity">released from C at rest</action>
+            , and is acted on by gravity, it will reach point B in an amount of time Huygens calls
+            <action id="HighlightF">F</action>.
+            If there is no gravity, and it given some initial speed downward,
+            <action id="AnimateBodyCtoDWithConstantVelocity">it will reach point D</action>
+            in time F.  If there is both an initial speed (BD) and gravity,
+            <action id="AnimateBodyCtoEUnderGravityAndWithConstantVelocity">the body will travel</action>
+            a distance that's equal to
+            <action "HighlightLineCB">CB</action>
+            +
+            <action id="HighlightLineBD">BD</action>
+            =
+            <action id="HightlightLineCE">CE</action>.
+          </p>
         </section>
 
         <figure>
