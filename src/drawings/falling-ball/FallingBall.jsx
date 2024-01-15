@@ -1,7 +1,7 @@
 // @ts-check
 
 import { CanvasBuilder } from '@/components/Canvas'
-import { Physics, Color } from '@/constants'
+import { Physics, Color } from '@/config'
 
 /** @type {import('@/components/Canvas/CanvasBuilder').DrawFactory} */
 function drawFallingBall (canvas) {
