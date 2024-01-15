@@ -1,0 +1,5 @@
+.action_span {
+  color: var(--blue);
+  font-weight: bold;
+  text-decoration: underline
+}
