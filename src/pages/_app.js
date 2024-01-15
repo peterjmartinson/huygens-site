@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { navLinks } from '@/config/routes'
+
 import '@/styles/globals.css'
 
 function MyApp ({ Component, pageProps }) {
   return (
     <>
-      <Header />
+      <Header navLinks={navLinks} />
       <Component {...pageProps} />
       <Footer />
     </>
