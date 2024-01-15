@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
-<<<<<<< HEAD
 import Image from 'next/image'
-=======
->>>>>>> 0b39069449f715b8278a4ec020ae183f453259bb
 import { Circle } from '@/drawings/circle'
 import styles from '@/styles/Home.module.css'
 
