@@ -1,35 +1,9 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import Link from 'next/link'
 import styles from './Header.module.css'
 
-export const navLinks = [
-  {
-    aria: 'Proposition I',
-    href: '/proposition-1',
-    id: 'PROPOSITION_1',
-    label: 'Proposition I'
-  },
-  {
-    aria: 'Proposition II',
-    href: '/proposition-2',
-    id: 'PROPOSITION_2',
-    label: 'Proposition II'
-  },
-  {
-    aria: 'Section 2 Hypotheses',
-    href: '/II.Hypotheses',
-    id: '2Hypotheses',
-    label: 'Section 2 Hypotheses'
-  },
-  {
-    aria: 'About',
-    href: '/about',
-    id: 'ABOUT',
-    label: 'About'
-  }
-]
-
-export function Header () {
+export function Header ({ navLinks }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const closeMenu = () => setIsMenuOpen(false)
@@ -76,4 +50,13 @@ export function Header () {
       </nav>
     </header>
   )
+}
+
+Header.propTypes = {
+  navLinks: PropTypes.arrayOf(PropTypes.shape({
+    aria: PropTypes.string,
+    href: PropTypes.string,
+    id: PropTypes.string,
+    label: PropTypes.string
+  }))
 }
