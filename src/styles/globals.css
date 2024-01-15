@@ -3,6 +3,7 @@
   --white: #f9f9f9;
   --black: #36383F;
   --gray: #85888C;
+  --blue: rgb(14, 99, 142);
 
   /* global static header positioning variables */
   --header-height-sm: 3rem;
