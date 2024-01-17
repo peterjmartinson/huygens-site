@@ -1,7 +1,7 @@
 // @ts-check
 
 import { CanvasBuilder } from '@/components/Canvas'
-import { Color } from '@/constants'
+import { Color } from '@/config'
 
 const initialState = {
   i: 0,

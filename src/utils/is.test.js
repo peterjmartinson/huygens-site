@@ -1,6 +1,7 @@
 import {
   isFunction,
-  isObject
+  isObject,
+  isString
 } from './is'
 
 describe('isFunction', () => {
@@ -37,5 +38,24 @@ describe('isObject', () => {
     [false, undefined]
   ])('should return %p when passed %p', (expected, val) => {
     expect(isObject(val)).toBe(expected)
+  })
+})
+
+describe('isString', () => {
+  it.each([
+    [true, 'some string'],
+    [true, JSON.stringify({})],
+    [false, {}],
+    [false, new Error()],
+    [false, []],
+    [false, 1],
+    [false, null],
+    [false, () => {}],
+    [false, async () => {}],
+    [false, function () {}],
+    [false, async function () {}],
+    [false, undefined]
+  ])('should return %p when passed %p', (expected, val) => {
+    expect(isString(val)).toBe(expected)
   })
 })
