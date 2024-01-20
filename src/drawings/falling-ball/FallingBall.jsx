@@ -3,16 +3,18 @@
 import { CanvasBuilder } from '@/components/Canvas'
 import { Physics, Color } from '@/config'
 
+const HEIGHT = 200
+const WIDTH = 100
+
 /** @type {import('@/components/Canvas/CanvasBuilder').DrawFactory} */
-function drawFallingBall (canvas) {
-  const ctx = canvas.getContext('2d')
+function drawFallingBall (ctx) {
   let requestId
 
-  const ground = ctx.canvas.height
+  const ground = HEIGHT
   const ball = {
     radius: 10,
     color: Color.BLUE,
-    position: { x: ctx.canvas.width / 2, y: 10 },
+    position: { x: WIDTH / 2, y: 10 },
     velocity: { x: 0, y: 0 },
     update () {
       this.velocity.x += Physics.GRAVITY.x
@@ -35,7 +37,7 @@ function drawFallingBall (canvas) {
 
   /** @type {import('@/components/Canvas/CanvasBuilder').DrawFunction} */
   function draw () {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, WIDTH, HEIGHT)
 
     ball.update()
     ball.create()
@@ -53,5 +55,6 @@ function drawFallingBall (canvas) {
 }
 
 export const FallingBall = new CanvasBuilder()
+  .withHeightAndWidth(HEIGHT, WIDTH)
   .withDrawFactory(drawFallingBall)
   .build()

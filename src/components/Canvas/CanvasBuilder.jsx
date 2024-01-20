@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from 'react'
 import { isFunction, isObject } from '@/utils/is'
-import styles from './Canvas.module.css'
 
 /**
  * @typedef  {Record<string, any>} DrawState
@@ -14,12 +13,40 @@ import styles from './Canvas.module.css'
  *
  * @typedef  {(props?: Record<string, any>) => void} DrawFunction
  *
- * @typedef  {(canvas: HTMLCanvasElement, config?: DrawFactoryConfig) => { draw: DrawFunction, abort?: () => void }} DrawFactory
+ * @typedef  {(ctx: CanvasRenderingContext2D, config?: DrawFactoryConfig) => { draw: DrawFunction, abort?: () => void }} DrawFactory
  */
 
 export class CanvasBuilder {
+  #height = 0
+  #width = 0
   #drawFactory = null
   #initialDrawState = {}
+
+  /**
+   * Sets the canvas height and width
+   * @param {number} height Defaults to 100px
+   * @param {number} [width] Optional. Defaults to height value (square canvas).
+   * @returns {CanvasBuilder}
+   */
+  withHeightAndWidth (height = 100, width) {
+    this.#height = height
+    this.#width = width ?? height
+    return this
+  }
+
+  /**
+   * @returns {number}
+   */
+  get height () {
+    return this.#height
+  }
+
+  /**
+   * @returns {number}
+   */
+  get width () {
+    return this.#width
+  }
 
   /**
    * A function that returns an object of functions:
@@ -73,10 +100,14 @@ export class CanvasBuilder {
 
     const drawFactory = this.drawFactory
     const initialDrawState = this.initialDrawState
+    const height = this.height
+    const width = this.width
 
     return function Canvas (props) {
       /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
       const canvasRef = useRef(null)
+      /** @type {React.MutableRefObject<CanvasRenderingContext2D | null>} */
+      const canvasCtxRef = useRef(null)
       const drawStateRef = useRef(initialDrawState)
 
       /**
@@ -97,18 +128,26 @@ export class CanvasBuilder {
         if (canvasRef.current != null) {
           const canvas = canvasRef.current
           const drawState = drawStateRef.current
+          const pixelRatio = window.devicePixelRatio ?? 1
 
-          const width = Number.parseInt(getComputedStyle(canvas)
-            .getPropertyValue('width'))
-          const height = Number.parseInt(getComputedStyle(canvas)
-            .getPropertyValue('height'))
+          // Set display size (css pixels)
+          canvas.style.height = `${height}px`
+          canvas.style.width = `${width}px`
 
-          // https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio
-          const scale = window.devicePixelRatio ?? 1
-          canvas.width = width * scale
-          canvas.height = height * scale
+          // Set actual size in memory (scaled to account for extra pixel density).
+          canvas.width = Math.floor(width * pixelRatio)
+          canvas.height = Math.floor(height * pixelRatio)
 
-          const { draw, abort } = drawFactory(canvas, { scale, drawState, setDrawState })
+          // store ctx in a ref
+          canvasCtxRef.current = canvas.getContext('2d')
+          const ctx = canvasCtxRef.current
+          ctx.scale(pixelRatio, pixelRatio)
+
+          const { draw, abort } = drawFactory(ctx, {
+            scale: pixelRatio, // provided to normalize canvas coordinate system to use CSS pixes
+            drawState,
+            setDrawState
+          })
 
           abortFn = abort
           draw(props)
@@ -122,7 +161,8 @@ export class CanvasBuilder {
       return (
         <canvas
           ref={canvasRef}
-          className={styles.canvas}
+          height={height}
+          width={width}
         />
       )
     }
