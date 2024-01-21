@@ -1,6 +1,7 @@
 // @ts-check
 
 import React, { useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
 import { isFunction, isObject } from '@/utils/is'
 
 /**
@@ -103,7 +104,7 @@ export class CanvasBuilder {
     const height = this.height
     const width = this.width
 
-    return function Canvas (props) {
+    function Canvas (props) {
       /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
       const canvasRef = useRef(null)
       /** @type {React.MutableRefObject<CanvasRenderingContext2D | null>} */
@@ -166,5 +167,12 @@ export class CanvasBuilder {
         />
       )
     }
+
+    Canvas.propTypes = {
+      // debug: PropTypes.bool, // @TODO
+      isPaused: PropTypes.bool
+    }
+
+    return Canvas
   }
 }
