@@ -1,6 +1,7 @@
 // @ts-check
 
 import React, { useEffect, useRef } from 'react'
+import PropTypes from 'prop-types'
 import { isFunction, isObject } from '@/utils/is'
 import styles from './Canvas.module.css'
 
@@ -74,7 +75,7 @@ export class CanvasBuilder {
     const drawFactory = this.drawFactory
     const initialDrawState = this.initialDrawState
 
-    return function Canvas (props) {
+    function Canvas (props) {
       /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
       const canvasRef = useRef(null)
       const drawStateRef = useRef(initialDrawState)
@@ -126,5 +127,12 @@ export class CanvasBuilder {
         />
       )
     }
+
+    Canvas.propTypes = {
+      // debug: PropTypes.bool, // @TODO
+      isPaused: PropTypes.bool
+    }
+
+    return Canvas
   }
 }
