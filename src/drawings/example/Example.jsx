@@ -3,22 +3,25 @@
 import { CanvasBuilder } from '@/components/Canvas'
 import { Color } from '@/config'
 
+const HEIGHT = 100
+const WIDTH = 100
+
 /** @type {import('@/components/Canvas/CanvasBuilder').DrawFactory} */
-function drawExample (canvas, { scale }) {
+function drawExample (ctx) {
   return {
     draw () {
-      const ctx = canvas.getContext('2d')
       ctx.fillStyle = Color.YELLOW
       ctx.fillRect(
         0,
         0,
-        100 * scale,
-        100 * scale
+        100,
+        100
       )
     }
   }
 }
 
 export const Example = new CanvasBuilder()
+  .withHeightAndWidth(HEIGHT, WIDTH)
   .withDrawFactory(drawExample)
   .build()

@@ -3,26 +3,26 @@
 import { CanvasBuilder } from '@/components/Canvas'
 import { Color } from '@/config'
 
+const HEIGHT = 100
+const WIDTH = 100
 const initialState = {
   i: 0,
   delta: 0.05
 }
 
 /** @type {import('@/components/Canvas/CanvasBuilder').DrawFactory} */
-function drawAnimatedCircle (canvas, { drawState, setDrawState }) {
+function drawAnimatedCircle (ctx, { drawState, setDrawState }) {
   let requestId
   let { i, delta } = drawState
 
   /** @type {import('@/components/Canvas/CanvasBuilder').DrawFunction} */
   function draw ({ isPaused }) {
-    const ctx = canvas.getContext('2d')
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, WIDTH, HEIGHT)
     ctx.beginPath()
     ctx.arc(
-      canvas.width / 2,
-      canvas.height / 2,
-      (canvas.width / 2) * Math.abs(Math.cos(i)),
+      WIDTH / 2,
+      HEIGHT / 2,
+      (WIDTH / 2) * Math.abs(Math.cos(i)),
       0,
       2 * Math.PI
     )
@@ -49,6 +49,7 @@ function drawAnimatedCircle (canvas, { drawState, setDrawState }) {
 }
 
 export const Circle = new CanvasBuilder()
+  .withHeightAndWidth(HEIGHT, WIDTH)
   .withDrawFactory(drawAnimatedCircle)
   .withInitialDrawState(initialState)
   .build()
