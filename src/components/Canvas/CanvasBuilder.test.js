@@ -19,13 +19,15 @@ describe('CanvasBuilder', () => {
       withId,
       withHeightAndWidth,
       withDrawFactory,
-      withInitialDrawState
+      withInitialDrawState,
+      build
     } = new CanvasBuilder()
 
     expect(typeof withId).toBe('function')
     expect(typeof withHeightAndWidth).toBe('function')
     expect(typeof withDrawFactory).toBe('function')
     expect(typeof withInitialDrawState).toBe('function')
+    expect(typeof build).toBe('function')
   })
 
   it('should build a react component when provided valid builder parameters', () => {
@@ -35,19 +37,28 @@ describe('CanvasBuilder', () => {
       .withDrawFactory(mockDrawFactory)
       .build()
 
+    // should have correct static properties
     expect(TestCanvas.ariaRole).toBe('img')
     expect(TestCanvas.id).toBe(mockId)
     expect(TestCanvas.dataTestId).toBe('Canvas_' + mockId)
 
+    // render the component
     render(<TestCanvas />)
-
-    // should be accessible by role
-    expect(screen.getByRole(TestCanvas.ariaRole)).toBeInTheDocument()
 
     // should be accessible by data-testid
     expect(screen.getByTestId(TestCanvas.dataTestId)).toBeInTheDocument()
-    expect(mockDrawFactory).toHaveBeenCalledTimes(1)
-    expect(mockDrawFn).toHaveBeenCalledTimes(1)
+
+    // should be accessible by role
+    const element = screen.getByRole(TestCanvas.ariaRole)
+
+    // should have the attributes we passed to the builder
+    expect(element).toHaveAttribute('height', String(mockHeight))
+    expect(element).toHaveAttribute('width', String(mockWidth))
+    expect(element).toHaveAttribute('id', mockId)
+
+    // component should have 1) called our drawFactory, and 2) called it's draw() method
+    expect(mockDrawFactory).toHaveBeenCalled()
+    expect(mockDrawFn).toHaveBeenCalled()
   })
 
   it('should error on build when `id` is omitted', () => {
