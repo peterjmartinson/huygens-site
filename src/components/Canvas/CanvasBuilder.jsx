@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { isFunction, isObject } from '@/utils/is'
+import { isFunction, isObject, isString } from '@/utils/is'
 
 /**
  * @typedef  {Record<string, any>} DrawState
@@ -18,10 +18,22 @@ import { isFunction, isObject } from '@/utils/is'
  */
 
 export class CanvasBuilder {
+  #ariaRole = 'img'
+  #id = ''
   #height = 0
   #width = 0
   #drawFactory = null
   #initialDrawState = {}
+
+  /**
+   * Sets the HTML id attribute. Also used to construct a data-testid
+   * @param {string} id
+   * @returns {CanvasBuilder}
+   */
+  withId (id) {
+    this.#id = id
+    return this
+  }
 
   /**
    * Sets the canvas height and width
@@ -36,20 +48,6 @@ export class CanvasBuilder {
   }
 
   /**
-   * @returns {number}
-   */
-  get height () {
-    return this.#height
-  }
-
-  /**
-   * @returns {number}
-   */
-  get width () {
-    return this.#width
-  }
-
-  /**
    * A function that returns an object of functions:
    *  - draw() - does the actual drawing on a provided canvas.
    *  - abort() - [optional] cancels any animation.
@@ -57,7 +55,6 @@ export class CanvasBuilder {
    * @returns {CanvasBuilder}
    */
   withDrawFactory (drawFactory) {
-    if (!isFunction(drawFactory)) throw new TypeError('drawFactory must be a function')
     this.#drawFactory = drawFactory
     return this
   }
@@ -91,8 +88,13 @@ export class CanvasBuilder {
    * Ensures the builder has required parameters
    */
   validateParamsToBuild () {
-    if (this.#drawFactory == null) {
-      throw new Error('A drawFactory function is required to build')
+    const errors = []
+
+    if (!isString(this.#id) || this.#id.length < 1) errors.push('An `id` {string} is required to build')
+    if (!isFunction(this.#drawFactory)) errors.push('A `drawFactory` {function} is required to build')
+
+    if (errors.length > 0) {
+      throw new Error(`CanvasBuilder failed to build:\n - ${errors.join('\n - ')}`)
     }
   }
 
@@ -101,8 +103,11 @@ export class CanvasBuilder {
 
     const drawFactory = this.drawFactory
     const initialDrawState = this.initialDrawState
-    const height = this.height
-    const width = this.width
+    const height = this.#height
+    const width = this.#width
+    const ariaRole = this.#ariaRole
+    const id = this.#id
+    const dataTestId = `Canvas_${this.#id}`
 
     function Canvas (props) {
       /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
@@ -161,9 +166,12 @@ export class CanvasBuilder {
 
       return (
         <canvas
+          role={ariaRole}
+          id={id}
           ref={canvasRef}
           height={height}
           width={width}
+          data-testid={dataTestId}
         />
       )
     }
@@ -172,6 +180,10 @@ export class CanvasBuilder {
       // debug: PropTypes.bool, // @TODO
       isPaused: PropTypes.bool
     }
+
+    Canvas.ariaRole = this.#ariaRole
+    Canvas.id = this.#id
+    Canvas.dataTestId = dataTestId
 
     return Canvas
   }
