@@ -49,6 +49,7 @@ function drawAnimatedCircle (ctx, { drawState, setDrawState }) {
 }
 
 export const Circle = new CanvasBuilder()
+  .withId('AnimatedCircle')
   .withHeightAndWidth(HEIGHT, WIDTH)
   .withDrawFactory(drawAnimatedCircle)
   .withInitialDrawState(initialState)

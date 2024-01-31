@@ -55,6 +55,7 @@ function drawFallingBall (ctx) {
 }
 
 export const FallingBall = new CanvasBuilder()
+  .withId('FallingBall')
   .withHeightAndWidth(HEIGHT, WIDTH)
   .withDrawFactory(drawFallingBall)
   .build()

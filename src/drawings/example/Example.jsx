@@ -22,6 +22,7 @@ function drawExample (ctx) {
 }
 
 export const Example = new CanvasBuilder()
+  .withId('ExampleSquare')
   .withHeightAndWidth(HEIGHT, WIDTH)
   .withDrawFactory(drawExample)
   .build()
