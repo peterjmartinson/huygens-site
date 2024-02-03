@@ -23,13 +23,13 @@ export const Drawing = new CanvasBuilder()
   .withId('TwoThings')
   .withHeightAndWidth(HEIGHT, WIDTH)
   .withInitialDrawState(initialState)
-  .withDrawFactory(drawAndAnimateTwoThings)
+  .withDrawFactory(drawFactory)
   .build()
 
 // - Draw Factory
 
 /** @type {import('@/components/Canvas/CanvasBuilder').DrawFactory} */
-function drawAndAnimateTwoThings (ctx, { drawState, setDrawState }) {
+function drawFactory (ctx, { drawState, setDrawState }) {
   const circle = { ...drawState.circle }
   const square = { ...drawState.square }
   let requestId
