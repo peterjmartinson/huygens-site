@@ -3,23 +3,24 @@
 import { CanvasBuilder } from '@/components/Canvas'
 import { Color, Physics } from '@/config'
 
-const HEIGHT = 100
+const HEIGHT = 200
 const WIDTH = 500
-const radius = 30
-let pointX, pointY
+const radius = WIDTH / (2 + 2 * Math.PI)
 
 const initialState = {
   rollingCircle: {
-    theta: -1 * Math.PI / 2,
+    theta: Math.PI / 2,
     direction: 1,
     speed: Physics.VELOCITY,
-    centerX: WIDTH / 2,
-    centerY: HEIGHT / 2
-  },
-  cycloid: {
-    x: [WIDTH / 2 + radius * Math.cos(-1 * Math.PI / 2)],
-    y: [WIDTH / 2 + radius * Math.sin(-1 * Math.PI / 2)],
-    i: 0
+    centerX: radius,
+    centerY: HEIGHT - radius,
+    cycloid: {
+      plot: [{
+        x: radius,
+        y: HEIGHT
+      }],
+      i: 0
+    }
   }
 }
 
@@ -37,7 +38,6 @@ export const Drawing = new CanvasBuilder()
 /** @type {import('@/components/Canvas/CanvasBuilder').DrawFactory} */
 function drawFactory (ctx, { drawState, setDrawState }) {
   const rollingCircle = { ...drawState.rollingCircle }
-  const cycloid = { ...drawState.cycloid }
   let requestId
 
   function draw (drawArgs) {
@@ -66,8 +66,8 @@ function drawFactory (ctx, { drawState, setDrawState }) {
     ctx.fill()
 
     // draw the line
-    pointX = rollingCircle.centerX + radius * Math.cos(rollingCircle.theta)
-    pointY = rollingCircle.centerY + radius * Math.sin(rollingCircle.theta)
+    const pointX = rollingCircle.centerX + radius * Math.cos(rollingCircle.theta)
+    const pointY = rollingCircle.centerY + radius * Math.sin(rollingCircle.theta)
     ctx.beginPath()
     ctx.moveTo(rollingCircle.centerX, rollingCircle.centerY)
     ctx.lineTo(pointX, pointY)
@@ -77,23 +77,19 @@ function drawFactory (ctx, { drawState, setDrawState }) {
 
     // draw the cycloid
     ctx.beginPath()
-    ctx.moveTo(cycloid.x[0], cycloid.y[0])
-    for (let i = 1; i < cycloid.i; i++) {
-      ctx.lineTo(cycloid.x[i], cycloid.y[i])
+    ctx.moveTo(rollingCircle.cycloid.plot[0].x, rollingCircle.cycloid.plot[0].y)
+    for (let i = 1; i < rollingCircle.cycloid.i; i++) {
+      ctx.lineTo(rollingCircle.cycloid.plot[i].x, rollingCircle.cycloid.plot[i].y)
     }
-    ctx.strokeStyle = Color.Yellow
     ctx.stroke()
-
-    // text box
-    ctx.fillText(`cycloid.x:  ${cycloid.x}`, 5, 10)
 
     ctx.restore()
     if (!isRollingCirclePaused) {
       rollingCircle.theta += rollingCircle.speed * rollingCircle.direction
       rollingCircle.centerX += rollingCircle.speed * radius * rollingCircle.direction
-      cycloid.i++
-      cycloid.x.push(pointX)
-      cycloid.Y.push(pointY)
+      rollingCircle.cycloid.i++
+      rollingCircle.cycloid.plot.push({ x: pointX, y: pointY })
+      rollingCircle.cycloid.plot = [...new Set(rollingCircle.cycloid.plot)] // removes all duplicates, to save memory!
     }
 
     setDrawState({ rollingCircle })
