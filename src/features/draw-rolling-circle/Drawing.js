@@ -12,7 +12,7 @@ const initialState = {
     theta: Math.PI / 2,
     direction: 1,
     speed: Physics.VELOCITY,
-    centerX: radius,
+    centerX: radius + 1,
     centerY: HEIGHT - radius,
     cycloid: {
       plot: [{
@@ -52,7 +52,7 @@ function drawFactory (ctx, { drawState, setDrawState }) {
 
     // fill in background, just for reference
     ctx.fillStyle = Color.BLACK
-    ctx.strokeRect(0, 0, WIDTH, HEIGHT)
+    ctx.fillRect(0, 0, WIDTH, HEIGHT)
 
     // draw the base circle
     ctx.beginPath()
