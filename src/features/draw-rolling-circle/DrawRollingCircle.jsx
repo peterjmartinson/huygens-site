@@ -18,15 +18,13 @@ export default function DrawRollingCircle () {
   return (
     <MainContainer>
       <ContentContainer>
-        <Drawing
-          isRollingCirclePaused={animationState.rollingCircle.isPaused}
-        />
-      </ContentContainer>
-
-      <ContentContainer>
         <p>
           <ActionSpan id='rollingCircle' text='Clicking here' onClick={togglePause} /> will animate the circle.
         </p>
+
+        <Drawing
+          isRollingCirclePaused={animationState.rollingCircle.isPaused}
+        />
       </ContentContainer>
     </MainContainer>
   )
