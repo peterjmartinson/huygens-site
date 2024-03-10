@@ -43,8 +43,11 @@ function drawFactory (ctx, { drawState, setDrawState }) {
   function draw (drawArgs) {
     const { isRollingCirclePaused } = drawArgs
 
-    if (rollingCircle.centerX >= WIDTH - radius || rollingCircle.centerX <= radius) {
-      rollingCircle.direction *= -1
+    if (rollingCircle.centerX >= WIDTH - radius) {
+      rollingCircle.direction = -1
+    }
+    if (rollingCircle.centerX <= radius) {
+      rollingCircle.direction = 1
     }
 
     ctx.clearRect(0, 0, WIDTH, HEIGHT)
@@ -52,7 +55,7 @@ function drawFactory (ctx, { drawState, setDrawState }) {
 
     // fill in background, just for reference
     ctx.fillStyle = Color.BLACK
-    ctx.strokeRect(0, 0, WIDTH, HEIGHT)
+    ctx.fillRect(0, 0, WIDTH, HEIGHT)
 
     // draw the base circle
     ctx.beginPath()
