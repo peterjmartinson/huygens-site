@@ -12,7 +12,7 @@ const initialState = {
     theta: Math.PI / 2,
     direction: 1,
     speed: Physics.VELOCITY,
-    centerX: radius + 1,
+    centerX: radius,
     centerY: HEIGHT - radius,
     cycloid: {
       plot: [{
@@ -43,8 +43,11 @@ function drawFactory (ctx, { drawState, setDrawState }) {
   function draw (drawArgs) {
     const { isRollingCirclePaused } = drawArgs
 
-    if (rollingCircle.centerX >= WIDTH - radius || rollingCircle.centerX <= radius) {
-      rollingCircle.direction *= -1
+    if (rollingCircle.centerX >= WIDTH - radius) {
+      rollingCircle.direction = -1
+    }
+    if (rollingCircle.centerX <= radius) {
+      rollingCircle.direction = 1
     }
 
     ctx.clearRect(0, 0, WIDTH, HEIGHT)
