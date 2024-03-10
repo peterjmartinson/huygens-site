@@ -109,7 +109,7 @@ export class CanvasBuilder {
     const id = this.#id
     const dataTestId = `Canvas_${this.#id}`
 
-    function Canvas (props) {
+    function Canvas ({ shouldResetCanvasState, onReset, ...props }) {
       /** @type {React.MutableRefObject<HTMLCanvasElement | null>} */
       const canvasRef = useRef(null)
       /** @type {React.MutableRefObject<CanvasRenderingContext2D | null>} */
@@ -127,6 +127,16 @@ export class CanvasBuilder {
           drawStateRef.current[key] = newState[key]
         }
       }
+
+      useEffect(
+        () => {
+          if (shouldResetCanvasState) {
+            setDrawState(initialDrawState)
+            onReset?.()
+          }
+        },
+        [shouldResetCanvasState, onReset]
+      )
 
       useEffect(() => {
         let abortFn
@@ -178,7 +188,8 @@ export class CanvasBuilder {
 
     Canvas.propTypes = {
       // debug: PropTypes.bool, // @TODO
-      isPaused: PropTypes.bool
+      shouldResetCanvasState: PropTypes.bool,
+      onReset: PropTypes.func
     }
 
     Canvas.ariaRole = this.#ariaRole
