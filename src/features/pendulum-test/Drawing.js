@@ -3,27 +3,17 @@
 import { CanvasBuilder } from '@/components/Canvas'
 import { Color, Physics } from '@/config'
 
-const HEIGHT = 600
-const WIDTH = 300
+const HEIGHT = 300
+const WIDTH = 600
 const radius = 20
 const LENGTH = 200
 
 const initialState = {
   pendulum: {
-    theta: Math.PI / 4,
-    speedX: 0,
-    speedY: 0,
     pivotX: WIDTH / 2,
-    pivotY: HEIGHT,
-    centerX: pivotX + LENGTH * Math.Sin(:,
-    centerY: HEIGHT - radius,
-    cycloid: {
-      plot: [{
-        x: radius,
-        y: HEIGHT
-      }],
-      i: 0
-    }
+    pivotY: 0,
+    angle: Math.PI / 2,
+    angularSpeed: 0
   }
 }
 
@@ -44,7 +34,46 @@ function drawFactory (ctx, { drawState, setDrawState }) {
   let requestId
 
   function draw (drawArgs) {
-    // implement
+    let { isPendulumPaused } = drawArgs
+
+    // First stage: draw pendulum, which depends only on LENGTH and angle
+    const x = pendulum.pivotX + LENGTH * Math.sin(pendulum.angle)
+    const y = pendulum.pivotY + LENGTH * Math.cos(pendulum.angle)
+
+    ctx.clearRect(0, 0, WIDTH, HEIGHT)
+    ctx.save()
+
+    ctx.beginPath()
+    ctx.moveTo(pendulum.pivotX, pendulum.pivotY)
+    ctx.lineTo(x, y)
+    ctx.closePath()
+    ctx.strokeStyle = Color.BLACK
+    ctx.stroke()
+
+    ctx.fillStyle = Color.BLACK
+    ctx.strokeRect(0, 0, WIDTH, HEIGHT)
+
+    ctx.beginPath()
+    ctx.arc(x, y, radius, 0, 2 * Math.PI, false)
+
+    ctx.fillStyle = Color.YELLOW
+    ctx.fill()
+
+    ctx.lineWidth = 3
+    ctx.strokeStyle = Color.BLUE
+    ctx.stroke()
+
+    // Second stage: Calculate new angular acceleration, then set angularSpeed, angle
+    if (!isPendulumPaused) {
+      const alpha = Physics.GRAVITY.y / 100 * Math.sin(pendulum.angle)
+      pendulum.angularSpeed += alpha
+      pendulum.angle -= pendulum.angularSpeed // note the minus.  Otherwise, gravity works UP in Canvas!
+      isPendulumPaused = true
+    }
+
+    setDrawState({ pendulum })
+
+    requestId = requestAnimationFrame(() => draw(drawArgs))
   }
 
   return {
